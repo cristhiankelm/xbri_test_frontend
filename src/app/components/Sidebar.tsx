@@ -10,6 +10,9 @@ export default function Sidebar() {
         <li className="p-4 hover:bg-gray-700">
           <Link href="/dashboard">Dashboard</Link>
         </li>
+        <li className="p-4 hover:bg-gray-700">
+          <Link href="/clients">Clientes</Link>
+        </li>
       </ul>
     </div>
   );
