@@ -66,7 +66,7 @@ export default function ClientsPage() {
                 <td className="py-3 px-6">{client.phone_number}</td>
                 <td className="py-3 px-6 text-center">
                   <div className="flex justify-center items-center">
-                    <Link href={`/authenticated/clients/${client.id}/edit`}>
+                    <Link href={`/clients/${client.id}/edit`}>
                       <p className="bg-yellow-500 text-white py-1 px-2 rounded mr-2">Editar</p>
                     </Link>
                     <button
