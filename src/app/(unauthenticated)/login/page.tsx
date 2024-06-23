@@ -12,8 +12,8 @@ export default function Login() {
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     try {
-      const response = await api.post('/login', { email, password });
-      localStorage.setItem('token', response.data.token);
+      const response = await api.post('/login/do', { email, password });
+      document.cookie = `token=${response.data.token}; path=/`; // Armazene o token nos cookies
       router.push('/dashboard');
     } catch (error) {
       console.error('Erro no login:', error);

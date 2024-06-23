@@ -1,12 +1,13 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
+import { deleteCookie } from 'cookies-next';
 
 export default function Topbar() {
   const router = useRouter();
 
   const handleLogout = () => {
-    localStorage.removeItem('token');
+    deleteCookie('token', { path: '/' });
     router.push('/login');
   };
 
