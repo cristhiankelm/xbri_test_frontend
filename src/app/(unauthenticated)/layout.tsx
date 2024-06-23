@@ -5,8 +5,8 @@ import "../../app/globals.css";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Login - Create Next App",
-  description: "Login page",
+  title: "Login - xbri",
+  description: "Pagina de autenticação",
 };
 
 interface UnauthenticatedLayoutProps {
