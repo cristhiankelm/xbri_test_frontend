@@ -42,14 +42,10 @@ export default function ClientsPage() {
     }
   };
 
-  if (loading) {
-    return <p>Carregando...</p>;
-  }
-
   return (
     <div className="p-8">
       <h1 className="text-3xl font-bold mb-4">Clientes</h1>
-      <Link href="/authenticated/clients/new">
+      <Link href="/clients/new">
         <p className="inline-block bg-blue-500 text-white py-2 px-4 rounded mb-4">Adicionar Cliente</p>
       </Link>
       <div className="overflow-x-auto">
