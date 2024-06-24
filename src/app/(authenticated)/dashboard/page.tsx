@@ -1,16 +1,54 @@
 'use client';
 
+import { useState, useEffect } from 'react';
+import { fetchDashboardData } from '../../services/dashboardService';
+
 import { Bar } from 'react-chartjs-2';
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from 'chart.js';
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
+interface DashboardData {
+  total_sales: number;
+  monthly_sales: number;
+  total_products_in_stock: number;
+  out_of_stock_products: number;
+  recent_orders: { id: number; total_amount: number }[];
+  top_sellers: { id: number; name: string; monthly_sales: number }[];
+}
+
 export default function Dashboard() {
+  
+  const [totalSales, setTotalSales] = useState<number>(0);
+  const [monthlySales, setMonthlySales] = useState<number>(0);
+  const [totalProductsInStock, setTotalProductsInStock] = useState<number>(0);
+  const [outOfStockProducts, setOutOfStockProducts] = useState<number>(0);
+  const [recentOrders, setRecentOrders] = useState<{ id: number; total_amount: number }[]>([]);
+  const [topSellers, setTopSellers] = useState<{ id: number; name: string; monthly_sales: number }[]>([]);
+
+  useEffect(() => {
+    const getData = async () => {
+      try {
+        const data: DashboardData = await fetchDashboardData();
+        setTotalSales(data.total_sales);
+        setMonthlySales(data.monthly_sales);
+        setTotalProductsInStock(data.total_products_in_stock);
+        setOutOfStockProducts(data.out_of_stock_products);
+        setRecentOrders(data.recent_orders);
+        setTopSellers(data.top_sellers);
+      } catch (error) {
+        console.error('Erro ao buscar dados de vendas:', error);
+      }
+    };
+
+    getData();
+  }, []);
+
   const salesData = {
     labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
     datasets: [
       {
-        label: 'Vendas (R$)',
+        label: 'Vendas (USD)',
         data: [5000, 7000, 8000, 6000, 9000, 10000, 11000, 13000, 12000, 14000, 15000, 16000],
         backgroundColor: 'rgba(54, 162, 235, 0.5)',
       },
@@ -22,30 +60,33 @@ export default function Dashboard() {
       <h1 className="text-3xl font-bold mb-4 text-center text-blue-600">Dashboard</h1>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-4">
-        <div className="bg-white p-4 rounded-lg shadow-lg hover:shadow-2xl transition-shadow">
+      <div className="bg-white p-4 rounded-lg shadow-lg hover:shadow-2xl transition-shadow">
           <h2 className="text-xl font-bold mb-2 text-blue-600">Resumo de Vendas</h2>
-          <p>Total de Vendas: <span className="font-semibold">R$ 150.000</span></p>
-          <p>Vendas no Mês: <span className="font-semibold">R$ 20.000</span></p>
-          <p>Meta do Mês: <span className="font-semibold">R$ 25.000</span></p>
+          <p>Total de Vendas: <span className="font-semibold">{totalSales.toLocaleString()}</span> USD</p>
+          <p>Vendas no Mês: <span className="font-semibold">{monthlySales.toLocaleString()}</span> USD</p>
         </div>
         <div className="bg-white p-4 rounded-lg shadow-lg hover:shadow-2xl transition-shadow">
           <h2 className="text-xl font-bold mb-2 text-blue-600">Estoque de Produtos</h2>
-          <p>Pneus em Estoque: <span className="font-semibold">1.200</span></p>
-          <p>Produtos Esgotados: <span className="font-semibold">5</span></p>
+          <p>Pneus em Estoque: <span className="font-semibold">{totalProductsInStock}</span></p>
+          <p>Produtos Esgotados: <span className="font-semibold">{outOfStockProducts}</span></p>
         </div>
         <div className="bg-white p-4 rounded-lg shadow-lg hover:shadow-2xl transition-shadow col-span-1 md:col-span-2 lg:col-span-1">
           <h2 className="text-xl font-bold mb-2 text-blue-600">Pedidos Recentes</h2>
           <ul className="list-disc pl-5">
-            <li>Pedido #12345 - <span className="font-semibold">R$ 1.500</span></li>
-            <li>Pedido #12346 - <span className="font-semibold">R$ 2.000</span></li>
-            <li>Pedido #12347 - <span className="font-semibold">R$ 3.200</span></li>
+            {recentOrders.map(order => (
+              <li key={order.id}>
+                Pedido #{order.id} - <span className="font-semibold">{order.total_amount.toLocaleString()}</span> USD
+              </li> 
+            ))}
           </ul>
         </div>
         <div className="bg-white p-4 rounded-lg shadow-lg hover:shadow-2xl transition-shadow col-span-1 md:col-span-2 lg:col-span-1">
-          <h2 className="text-xl font-bold mb-2 text-blue-600">Desempenho dos Vendedores</h2>
-          <p>Vendedor Top: <span className="font-semibold">João - R$ 50.000</span></p>
-          <p>Vendedor Médio: <span className="font-semibold">Maria - R$ 30.000</span></p>
-          <p>Vendedor Iniciante: <span className="font-semibold">Pedro - R$ 10.000</span></p>
+          <h2 className="text-xl font-bold mb-2 text-blue-600">Melhores vendedores no mês</h2>
+          {topSellers.map(seller => (
+            <p key={seller.id}>
+              {seller.name} - <span className="font-semibold">{seller.monthly_sales.toLocaleString()}</span> USD
+            </p>
+          ))}
         </div>
       </div>
 
