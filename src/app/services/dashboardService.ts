@@ -18,3 +18,13 @@ export const fetchDashboardData = async (): Promise<DashboardData> => {
     throw error;
   }
 };
+
+export const fetchSalesDataForChart = async (): Promise<number[]> => {
+  try {
+    const response = await api.get<number[]>('/dashboard/sales-data');
+    return response.data;
+  } catch (error) {
+    console.error('Erro ao buscar dados do gráfico de vendas:', error);
+    throw error;
+  }
+};
