@@ -83,20 +83,43 @@ A proposta do projeto é criar uma solução completa para a gestão de um ecomm
 
    O projeto estará disponível em `http://localhost:3000`.
 
-    ## Estrutura do Projeto
+   ## Estrutura do Projeto
 
 - **/src/app**: Contém as páginas e componentes da aplicação.
 - **/src/components**: Componentes reutilizáveis.
 - **/src/services**: Configurações e serviços de comunicação com o backend.
 - **/src/styles**: Arquivos de estilização global.
+- **/docs/images**: Imagens da documentação.
 
-    ## Rotas Principais
+   ## Rotas Principais
 
 - **/dashboard**: Página inicial do painel administrativo com o resumo das vendas e gráficos.
 - **/clients**: Listagem e gestão de clientes.
 - **/login**: Página de autenticação.
 
-    ### Notas
+## Capturas de Tela
+
+### Página de Login
+
+![Página de Login](./docs/images/login.png "Página de Login")
+
+### Dashboard
+
+![Dashboard](./docs/images/dashboard.png "Dashboard")
+
+### Listar Clientes
+
+![Listar Clientes](./docs/images/clients-index.png "Listar Clientes")
+
+### Registrar Cliente
+
+![Registrar Cliente](./docs/images/client-add.png "Registrar Cliente")
+
+### Editar Cliente
+
+![Editar Cliente](./docs/images/client-edit.png "Editar Cliente")
+
+## Notas
 
 O sistema foi desenvolvido como parte de um desafio proposto pela empresa XBRI, utilizando Next.js. Este projeto marcou meu primeiro contato com a tecnologia Next.js, embora eu já tenha tido experiências anteriores com React. Decidi usar Next.js em vez de Angular para expandir meus conhecimentos no ecossistema React.
 
